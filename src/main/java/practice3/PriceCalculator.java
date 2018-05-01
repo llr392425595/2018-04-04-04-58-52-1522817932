@@ -11,24 +11,26 @@ public class PriceCalculator {
   }
 
   public BigDecimal calculate() {
-    BigDecimal subTotal = new BigDecimal(0);
+    BigDecimal discountedSubTotal = getDiscountedSubtotal();
+    return getGrandTotal(discountedSubTotal, this.order.tax);
+  }
 
-    // Total up line items
-    for (OrderLineItem lineItem : order.orderLineItemList) {
-      subTotal = subTotal.add(lineItem.getPrice());
-    }
+  private BigDecimal getSubTotal() {
+    return order.orderLineItemList.stream().map(OrderLineItem::getPrice).reduce(BigDecimal::add)
+        .get();
+  }
 
-    // Subtract discounts
-    for (BigDecimal discount : order.discounts) {
-      subTotal = subTotal.subtract(discount);
-    }
+  private BigDecimal discount() {
+    return order.discounts.stream().reduce(BigDecimal::add).get();
+  }
 
-    // calculate tax
-    BigDecimal tax = subTotal.multiply(this.order.tax);
+  private BigDecimal getDiscountedSubtotal() {
+    return getSubTotal().subtract(discount());
+  }
 
-    // calculate GrandTotal
-
-    return subTotal.add(tax);
+  private BigDecimal getGrandTotal(BigDecimal discountedSubTotal,BigDecimal taxRate) {
+    BigDecimal taxMoney = discountedSubTotal.multiply(taxRate);
+    return discountedSubTotal.add(taxMoney);
   }
 
 }
