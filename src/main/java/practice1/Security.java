@@ -6,7 +6,7 @@ public class Security {
 
     private SecurityChecker securityChecker;
 
-    public Security(SecurityChecker checker) {
+    Security(SecurityChecker checker) {
         this.securityChecker = checker;
     }
 
