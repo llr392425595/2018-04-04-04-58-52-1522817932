@@ -5,15 +5,13 @@ import java.util.List;
 
 public class Order {
 
-    public List<OrderLineItem> orderLineItemList;
-    public List<BigDecimal> discounts;
-    public BigDecimal tax;
+  public List<OrderLineItem> orderLineItemList;
+  public List<BigDecimal> discounts;
+  public BigDecimal tax;
 
-    public Order(List<OrderLineItem> orderLineItemList, List<BigDecimal> discounts) {
-        this.orderLineItemList = orderLineItemList;
-        this.discounts = discounts;
-        this.tax = new BigDecimal(0.1);
-    }
-
-
+  Order(List<OrderLineItem> orderLineItemList, List<BigDecimal> discounts) {
+    this.orderLineItemList = orderLineItemList;
+    this.discounts = discounts;
+    this.tax = new BigDecimal(0.1);
+  }
 }
